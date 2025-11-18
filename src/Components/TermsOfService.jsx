@@ -69,7 +69,6 @@ const TermsOfService = () => {
   <p className="mb-8">
     Paylinkly shall not be liable for indirect, incidental, or consequential damages, even if we were advised of the possibility. Our total liability shall not exceed the amount paid us in the 12 months prior to the claim.
   </p>
-{/*  */}
   <h2 className="font-semibold mb-3">Indemnity</h2>
   <p className="mb-8">
     You agree to indemnify and hold Paylinkly harmless from any claims, liabilities, or expenses arising from your use of the services or violation of these Terms.
