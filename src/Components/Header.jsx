@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { HiOutlineMenu, HiX } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import MenuArrow from "../assets/Images/menu-arrow.svg";
@@ -12,12 +12,30 @@ const Header = () => {
     chargeback: false,
   });
 
+  // ⭐ Scroll blur state
+  const [scrolled, setScrolled] = useState(false);
+
+  // ⭐ Detect scroll for blur background
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) setScrolled(true);
+      else setScrolled(false);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const toggleSubMenu = (key) => {
     setSubMenus((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   return (
-    <header className="w-full  fixed top-0 left-0 z-50 bg-white/30 backdrop-blur-md shadow-sm">
+    <header
+      className={`w-full fixed top-0 left-0 z-50 transition-all duration-300
+      ${scrolled ? "bg-white/70 backdrop-blur-xl shadow-md" : "bg-white/30 backdrop-blur-sm"}
+      `}
+    >
       <div className="max-w-[1200px] mx-auto flex justify-between items-center py-4 px-6">
         {/* Logo */}
         <h1 className="text-[26px] text-[#0b2239]">Paylinkly</h1>
@@ -39,8 +57,9 @@ const Header = () => {
               onMouseLeave={() => setSolutionsOpen(false)}
             >
               <button
-                className={`hover:text-[#0b2239] flex items-center gap-1 cursor-pointer ${solutionsOpen ? "active" : ""
-                  }`}
+                className={`hover:text-[#0b2239] flex items-center gap-1 cursor-pointer ${
+                  solutionsOpen ? "active" : ""
+                }`}
               >
                 Solutions{" "}
                 <span>
@@ -50,10 +69,11 @@ const Header = () => {
 
               {/* Dropdown */}
               <div
-                className={`absolute left-0 top-full mt-2 bg-white rounded-xl shadow-lg transition-all duration-300 origin-top z-30 ${solutionsOpen
-                  ? "opacity-100 visible translate-y-0"
-                  : "opacity-0 invisible -translate-y-2"
-                  }`}
+                className={`absolute left-0 top-full mt-2 bg-white rounded-xl shadow-lg transition-all duration-300 origin-top z-30 ${
+                  solutionsOpen
+                    ? "opacity-100 visible translate-y-0"
+                    : "opacity-0 invisible -translate-y-2"
+                }`}
               >
                 <ul className="flex flex-col w-[260px] relative">
                   {[
@@ -67,10 +87,11 @@ const Header = () => {
                     <li key={i} className="relative group/item">
                       <Link
                         to={item.path || "#"}
-                        className={`px-5 py-3 text-sm font-medium text-gray-700 flex justify-between items-center ${item.hasSubmenu
-                          ? "hover:bg-blue-50 hover:text-[#03449D]"
-                          : "hover:bg-gray-100"
-                          }`}
+                        className={`px-5 py-3 text-sm font-medium text-gray-700 flex justify-between items-center ${
+                          item.hasSubmenu
+                            ? "hover:bg-blue-50 hover:text-[#03449D]"
+                            : "hover:bg-gray-100"
+                        }`}
                       >
                         {item.name}
                         {item.hasSubmenu && (
@@ -91,24 +112,24 @@ const Header = () => {
                             {(
                               item.name === "Credit Card Processing"
                                 ? [
-                                  { name: "Retail Credit Card Processing", path: "/retail-credit-card-processing" },
-                                  { name: "Mobile Credit Card Payments", path: "/mobile-credit-card-payments" },
-                                  { name: "Zero-cost Credit Card Processing", path: "/zero-cost-credit-card" },
-                                ]
+                                    { name: "Retail Credit Card Processing", path: "/retail-credit-card-processing" },
+                                    { name: "Mobile Credit Card Payments", path: "/mobile-credit-card-payments" },
+                                    { name: "Zero-cost Credit Card Processing", path: "/zero-cost-credit-card" },
+                                  ]
                                 : item.name === "Online Payment Processing"
-                                  ? [
+                                ? [
                                     { name: "ACH Payment Processing", path: "/ach-payment-processing" },
                                     { name: "Crypto Payment Processing", path: "/crypto-payment-processing" },
                                     { name: "E Check Payment Processing", path: "/e-check-payment-processing" },
                                   ]
-                                  : item.name === "Chargeback Services"
-                                    ? [
-                                      { name: "ChargeBack Represents", path: "/charge-back-represents" },
-                                      { name: "Real Time Chargeback Alerts", path: "/real-time-chargeBack-alerts" },
-                                      { name: "Reduce , Manage And Win Chargebacks", path: "/reduce-manage-and-win-chargebacks" },
-                                      { name: "Stop And Prevent Fraud", path: "/stop-and-prevent-fraud" },
-                                    ]
-                                    : []
+                                : item.name === "Chargeback Services"
+                                ? [
+                                    { name: "ChargeBack Represents", path: "/charge-back-represents" },
+                                    { name: "Real Time Chargeback Alerts", path: "/real-time-chargeBack-alerts" },
+                                    { name: "Reduce , Manage And Win Chargebacks", path: "/reduce-manage-and-win-chargebacks" },
+                                    { name: "Stop And Prevent Fraud", path: "/stop-and-prevent-fraud" },
+                                  ]
+                                : []
                             ).map((sub, j) => (
                               <li key={j}>
                                 <Link
@@ -123,7 +144,6 @@ const Header = () => {
                           </ul>
                         </div>
                       )}
-
                     </li>
                   ))}
                 </ul>
@@ -151,10 +171,11 @@ const Header = () => {
         </button>
       </div>
 
-      {/* ✅ Mobile Menu */}
+      {/* Mobile Menu */}
       <div
-        className={`lg:hidden bg-white shadow-lg absolute top-full left-0 w-full transition-all duration-300 overflow-hidden ${menuOpen ? "max-h-[800px]" : "max-h-0"
-          }`}
+        className={`lg:hidden bg-white shadow-lg absolute top-full left-0 w-full transition-all duration-300 overflow-hidden ${
+          menuOpen ? "max-h-[800px]" : "max-h-0"
+        }`}
       >
         <nav className="flex flex-col py-4 text-[#555]">
           <Link to="/" onClick={() => setMenuOpen(false)} className="px-6 py-2 hover:bg-blue-50 hover:text-[#03449D]">
@@ -174,97 +195,119 @@ const Header = () => {
             <img
               src={MenuArrow}
               alt="arrow"
-              className={`transition-transform duration-300 ${solutionsOpen ? "rotate-180" : ""
-                }`}
+              className={`transition-transform duration-300 ${
+                solutionsOpen ? "rotate-180" : ""
+              }`}
             />
           </button>
 
-          {/* ✅ Mobile expandable submenus */}
-          {/* ✅ Mobile expandable submenus */}
+          {/* Mobile Expandables */}
+          {solutionsOpen && (
+            <div className="ml-5 mt-1 flex flex-col gap-1">
+              {/* Credit Card Processing */}
+              <button
+                onClick={() => toggleSubMenu("creditCard")}
+                className="px-4 py-2 flex justify-between items-center text-sm hover:text-[#03449D]"
+              >
+                Credit Card Processing
+                <img
+                  src={MenuArrow}
+                  alt="arrow"
+                  className={`transition-transform duration-300 ${
+                    subMenus.creditCard ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {subMenus.creditCard && (
+                <div className="ml-5 flex flex-col text-sm">
+                  <Link to="/retail-credit-card-processing" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">
+                    Retail Credit Card Processing
+                  </Link>
+                  <Link to="/mobile-credit-card-payments" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">
+                    Mobile Credit Card Payments
+                  </Link>
+                  <Link to="/zero-cost-credit-card" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">
+                    Zero-cost Credit Card Processing
+                  </Link>
+                </div>
+              )}
 
+              {/* Online Payment Processing */}
+              <button
+                onClick={() => toggleSubMenu("onlinePayment")}
+                className="px-4 py-2 flex justify-between items-center text-sm hover:text-[#03449D]"
+              >
+                Online Payment Processing
+                <img
+                  src={MenuArrow}
+                  alt="arrow"
+                  className={`transition-transform duration-300 ${
+                    subMenus.onlinePayment ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {subMenus.onlinePayment && (
+                <div className="ml-5 flex flex-col text-sm">
+                  <Link to="/ach-payment-processing" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">
+                    ACH Payment Processing
+                  </Link>
+                  <Link to="/crypto-payment-processing" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">
+                    Crypto Payment Processing
+                  </Link>
+                  <Link to="/e-check-payment-processing" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">
+                    E-Check Payment Processing
+                  </Link>
+                </div>
+              )}
 
-{solutionsOpen && (
-  <div className="ml-5 mt-1 flex flex-col gap-1">
-    {/* Credit Card Processing */}
-    <button
-      onClick={() => toggleSubMenu("creditCard")}
-      className="px-4 py-2 flex justify-between items-center text-sm hover:text-[#03449D]"
-    >
-      Credit Card Processing
-      <img
-        src={MenuArrow}
-        alt="arrow"
-        className={`transition-transform duration-300 ${subMenus.creditCard ? "rotate-180" : ""}`}
-      />
-    </button>
-    {subMenus.creditCard && (
-      <div className="ml-5 flex flex-col text-sm">
-        <Link to="/retail-credit-card-processing" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">Retail Credit Card Processing</Link>
-        <Link to="/mobile-credit-card-payments" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">Mobile Credit Card Payments</Link>
-        <Link to="/zero-cost-credit-card" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">Zero-cost Credit Card Processing</Link>
-      </div>
-    )}
+              {/* Chargeback Services */}
+              <button
+                onClick={() => toggleSubMenu("chargeback")}
+                className="px-4 py-2 flex justify-between items-center text-sm hover:text-[#03449D]"
+              >
+                Chargeback Services
+                <img
+                  src={MenuArrow}
+                  alt="arrow"
+                  className={`transition-transform duration-300 ${
+                    subMenus.chargeback ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {subMenus.chargeback && (
+                <div className="ml-5 flex flex-col text-sm">
+                  <Link to="/charge-back-represents" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">
+                    Chargeback Represents
+                  </Link>
+                  <Link to="/real-time-chargeBack-alerts" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">
+                    Real-Time Chargeback Alerts
+                  </Link>
+                  <Link to="/reduce-manage-and-win-chargebacks" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">
+                    Reduce, Manage & Win Chargebacks
+                  </Link>
+                  <Link to="/stop-and-prevent-fraud" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">
+                    Stop & Prevent Fraud
+                  </Link>
+                </div>
+              )}
 
-    {/* Online Payment Processing */}
-    <button
-      onClick={() => toggleSubMenu("onlinePayment")}
-      className="px-4 py-2 flex justify-between items-center text-sm hover:text-[#03449D]"
-    >
-      Online Payment Processing
-      <img
-        src={MenuArrow}
-        alt="arrow"
-        className={`transition-transform duration-300 ${subMenus.onlinePayment ? "rotate-180" : ""}`}
-      />
-    </button>
-    {subMenus.onlinePayment && (
-      <div className="ml-5 flex flex-col text-sm">
-        <Link to="/ach-payment-processing" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">ACH Payment Processing</Link>
-        <Link to="/crypto-payment-processing" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">Crypto Payment Processing</Link>
-        <Link to="/e-check-payment-processing" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">E-Check Payment Processing</Link>
-      </div>
-    )}
-
-    {/* Chargeback Services */}
-    <button
-      onClick={() => toggleSubMenu("chargeback")}
-      className="px-4 py-2 flex justify-between items-center text-sm hover:text-[#03449D]"
-    >
-      Chargeback Services
-      <img
-        src={MenuArrow}
-        alt="arrow"
-        className={`transition-transform duration-300 ${subMenus.chargeback ? "rotate-180" : ""}`}
-      />
-    </button>
-    {subMenus.chargeback && (
-      <div className="ml-5 flex flex-col text-sm">
-        <Link to="/charge-back-represents" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">Chargeback Represents</Link>
-        <Link to="/real-time-chargeBack-alerts" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">Real-Time Chargeback Alerts</Link>
-        <Link to="/reduce-manage-and-win-chargebacks" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">Reduce, Manage & Win Chargebacks</Link>
-        <Link to="/stop-and-prevent-fraud" onClick={() => setMenuOpen(false)} className="py-1 hover:text-[#03449D]">Stop & Prevent Fraud</Link>
-      </div>
-    )}
-
-    {/* ✅ Plain links for the last two items */}
-    <Link
-      to="/analytical-reports"
-      className="px-4 py-2 text-sm hover:bg-blue-50 hover:text-[#03449D] text-left"
-      onClick={() => setMenuOpen(false)}
-    >
-      Analytical Reports
-    </Link>
-    <Link
-      to="/merchant-account-analysis"
-      className="px-4 py-2 text-sm hover:bg-blue-50 hover:text-[#03449D] text-left"
-      onClick={() => setMenuOpen(false)}
-    >
-      Merchant Account Analysis
-    </Link>
-  </div>
-)}
-
-
+              {/* Normal links */}
+              <Link
+                to="/analytical-reports"
+                className="px-4 py-2 text-sm hover:bg-blue-50 hover:text-[#03449D] text-left"
+                onClick={() => setMenuOpen(false)}
+              >
+                Analytical Reports
+              </Link>
+              <Link
+                to="/merchant-account-analysis"
+                className="px-4 py-2 text-sm hover:bg-blue-50 hover:text-[#03449D] text-left"
+                onClick={() => setMenuOpen(false)}
+              >
+                Merchant Account Analysis
+              </Link>
+            </div>
+          )}
 
           <div className="border-t border-gray-200 my-2" />
           <button className="px-6 py-2 text-blue-900 hover:bg-blue-50 hover:text-[#03449D]">
