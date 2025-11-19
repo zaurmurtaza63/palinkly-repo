@@ -135,7 +135,7 @@ const Leads = () => {
         ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
       `}
     >
-      <div className="w-[800px] px-5">
+      <div className="lg:w-[800px] md:w-[700px] w-full px-5">
         {/* ---- STEP NAV ---- */}
         <div className="w-full mx-auto mt-2 mb-10">
           <div className="flex justify-between items-start">
@@ -155,14 +155,14 @@ const Leads = () => {
                 >
                   <div
                     className={`
-                           h-1 w-30 rounded-full mb-2 transition-all duration-300
+                           h-1 lg:w-28 md:w-20 w-12 rounded-full mb-2 transition-all duration-300
                            ${i < step ? "gradiant-blue" : ""}
                            ${i === step ? "gradiant-blue" : ""}
                            ${i > step ? "bg-gray-300" : ""}
                          `}
                   ></div>
                   <h4
-                    className={`md:text-lg text-lg transition-all duration-300 tracking-[-0.56px] ${
+                    className={`md:text-lg md:block hidden transition-all duration-300 tracking-[-0.56px] ${
                       isActive ? "text-[#003077]" : "text-gray-500"
                     }`}
                   >
@@ -190,7 +190,7 @@ const Leads = () => {
           <div
             className={`mb-10 grediant-text ${
               step === 2
-                ? "grid grid-cols-3 gap-6 justify-center"
+                ? "grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 justify-center mx-auto max-w-fit"
                 : "flex flex-wrap gap-10 justify-center"
             }`}
           >
