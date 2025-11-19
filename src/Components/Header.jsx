@@ -38,7 +38,9 @@ const Header = () => {
     >
       <div className="max-w-[1200px] mx-auto flex justify-between items-center py-4 px-6">
         {/* Logo */}
+        <Link to="/"> 
         <h1 className="text-[26px] text-[#0b2239]">Paylinkly</h1>
+        </Link>
 
         {/* Desktop Nav */}
         <div className="flex gap-[30px]">
@@ -153,12 +155,15 @@ const Header = () => {
 
           {/* Desktop Buttons */}
           <div className="hidden lg:flex items-center gap-2.5">
-            <button className="white-btn text-blue-950 hover:-translate-y-0.5 hover:shadow-md transition-all duration-300">
+            <Link to="/contact">
+            <button className="white-btn cursor-pointer text-blue-950 hover:-translate-y-0.5 hover:shadow-md transition-all duration-300">
               Tired of Chargebacks?
-            </button>
-            <button className="blue-btn text-white hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300">
+            </button></Link>
+            <Link to="/contact">
+            <button className="blue-btn cursor-pointer text-white hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300">
               Schedule Consultation
-            </button>
+            </button></Link>
+            
           </div>
         </div>
 
