@@ -29,7 +29,7 @@ const Contact = () => {
 
       console.log("User Saved:", res.data);
 
-      // Optional: Clear form fields
+      // Clear form
       setName("");
       setLastName("");
       setEmail("");
@@ -39,11 +39,21 @@ const Contact = () => {
       alert("Form submitted successfully!");
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("Something went wrong!");
+
+      // 🔥 DUPLICATE EMAIL HANDLING
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.code === 11000
+      ) {
+        alert("This email is already available!");
+      } else {
+        alert("Something went wrong!");
+      }
     }
   };
 
-  // ✅ Observe when section enters viewport
+  // Viewport animation
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -57,7 +67,7 @@ const Contact = () => {
 
     if (formRef.current) observer.observe(formRef.current);
     return () => observer.disconnect();
-  });
+  }, []);
 
   return (
     <>
