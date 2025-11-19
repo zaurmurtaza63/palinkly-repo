@@ -3,6 +3,7 @@ import HeroSection from "./HeroSection";
 import HeroBg from "../assets/Images/about.webp";
 
 const PrivacyPolicy = () => {
+
   return (
     <>
       <HeroSection
@@ -13,6 +14,7 @@ const PrivacyPolicy = () => {
         buttonText="Start Today"
 
       />
+       
 
       <section className="faq-content max-w-5xl mx-auto px-5 lg:px-0 py-16 text-[#081029] leading-relaxed">
         {/* Our Commitment */}
