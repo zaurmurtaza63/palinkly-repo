@@ -6,18 +6,18 @@ const Footer = () => {
     <footer className="footer-bg-img">
       <div className="max-w-[1200px] mx-auto">
         <div className="footer-devider"></div>
-        <div className="px-5 gap-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 pt-16 pb-20">
+        <div className="px-5 gap-7 grid grid-cols-1 md:grid-cols-2 pt-16 pb-20">
         <div className="flex flex-col gap-8">
           <div className="max-w-[392px] flex flex-col gap-3">
              <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text leading-tight">
               Paylinkly
             </h3>
-             <p className="footer-text">Get merchant services and start processing payments instantly. We can design a custom package for your business and integrate with your existing website.</p>
+             <p className="footer-text md:max-w-[280px] lg:max-w-full">Get merchant services and start processing payments instantly. We can design a custom package for your business and integrate with your existing website.</p>
              </div>
-             <button className="w-fit blue-btn hover:-translate-y-0.5 hover:shadow-lg hover:cursor-pointer transition-all duration-300 text-white font-bold">Schedule Consultation</button>
+             <button className="md:text-base text-sm hover:cursor-pointer flex items-center justify-center gap-2.5 blue-btn max-w-fit hover:-translate-y-0.5 transition-all duration-300 text-white font-medium">Schedule Consultation</button>
         </div>
-        <div className="flex gap-[70px] items-start justify-end">
-        <div className="flex flex-col gap-3">
+        <div className="flex md:flex-row flex-col md:gap-[70px] gap-5 items-start md:justify-end">
+        <div className="flex flex-col md:gap-3 gap-2">
           <h4 className="md:text-[18px] text-base gradient-text leading-tight">Quicklinks</h4>
           <ul className="flex flex-col gap-1.5 footer-text">
             <li> <Link to="/about"> About </Link> </li>
